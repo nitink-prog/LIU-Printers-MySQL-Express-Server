@@ -1,0 +1,19 @@
+{
+  "name": "mysqlliuprinters",
+  "version": "1.0.0",
+  "description": "MySQL database for LIU Printers app by Nitin Kumar",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.3",
+    "mysql2": "^2.3.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
