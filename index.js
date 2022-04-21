@@ -56,7 +56,7 @@ app
       id,
       // TO-DO
     };
-    let sql = "INSERT INTO printers SET ?";
+    let sql = "INSERT INTO printers SET ?"; // INSERT INTO `printers` (`id`, `building`, `date_updated`, `department`, `mac_address`, `model`, `name`, `room`, `serial`) VALUES ('100', 'unknown', '2022-04-20', '', '60:12:8B:D5:0E:5B', '4235', 'B-HS-604-1', 'unknown', 'RKJ18475'); 
     let query = db.query(sql, printer, (err, result) => {
       if (err) throw err;
       console.log(result);
