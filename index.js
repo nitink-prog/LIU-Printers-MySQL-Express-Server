@@ -71,9 +71,12 @@ app
       console.log(result);
       res.send(result);
     });
+  }) // Delete a Printer
+  .delete((req, res) => {
+    let id = req.params.id;
+    let sql = `DELETE FROM printers WHERE id = ${id}`;
+    // DISABLED FOR NOW...
   });
-
-// Delete a Printer
 
 // Listener
 app.listen(portExpress, () => {
