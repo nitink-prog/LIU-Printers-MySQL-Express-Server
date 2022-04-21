@@ -53,10 +53,18 @@ app
   // Update a Printer
   .put((req, res) => {
     let id = req.params.id;
-    let sql = "UPDATE printers SET ?"; // UPDATE `printers` SET `dateUpdated` = NULL WHERE `printers`.`id` = 101;
-    // TO-DO
+    let dept = req.body.department;
+    let room = req.body.room;
+    // let sql = `UPDATE printers SET ${stringrequest} WHERE printers.id = ${id}`;
+    let sql = `UPDATE printers SET department = '${dept}', room = '${room}' WHERE printers.id = ${id}`;
+    let query = db.query(sql, (err, result) => {
+      if (err) throw err;
+      console.log(result);
+      // res.send(result);
+    });
+
     res.json(req.body);
-    console.log(req.body);
+    console.log(sql);
   })
   // Insert a Printer
   .post((req, res) => {
