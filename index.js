@@ -44,9 +44,10 @@ app
   // Insert a Printer
   .post((req, res) => {
     let printer = req.body;
-    let sql =
-      "INSERT INTO printers (id, building, date_updated, department, mac_address, model, name, room, serial) " +
-      `VALUES (${printer.id}, '${printer.building}', '${printer.date_updated}', '${printer.department}', '${printer.mac_address}', '${printer.model}', '${printer.name}', '${printer.room}', '${printer.serial}')`;
+    let sql = "INSERT INTO printers SET ?";
+    // the above line is equivalent to:
+    // "INSERT INTO printers (id, building, date_updated, department, mac_address, model, name, room, serial) " +
+    // `VALUES (${printer.id}, '${printer.building}', '${printer.date_updated}', '${printer.department}', '${printer.mac_address}', '${printer.model}', '${printer.name}', '${printer.room}', '${printer.serial}')`;
 
     let query = db.query(sql, printer, (err, result) => {
       if (err) throw err;
