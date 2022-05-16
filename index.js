@@ -1,5 +1,6 @@
 const express = require("express");
 const mysql = require("mysql2");
+const cors = require("cors");
 
 // ***** SQL ****** //
 const database = "printers";
@@ -21,6 +22,7 @@ db.connect((err) => {
 const app = express();
 const portExpress = "3008";
 app.use(express.json());
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.send(
@@ -29,14 +31,29 @@ app.get("/", (req, res) => {
 });
 
 // Get Full Printers DB - Pagination?
-app.get("/printers", (req, res) => {
-  let sql = "SELECT * FROM printers";
-  let query = db.query(sql, (err, results) => {
-    if (err) throw err;
-    console.log(results);
-    res.send(results);
+app
+  .route("/printers")
+  .get((req, res) => {
+    let sql = "SELECT * FROM printers";
+    let query = db.query(sql, (err, results) => {
+      if (err) throw err;
+      console.log(results);
+      res.send(results);
+    });
+  })
+  // Insert a Printer
+  .post((req, res) => {
+    let printer = req.body;
+    let sql =
+      "INSERT INTO printers (id, building, date_updated, department, mac_address, model, name, room, serial) " +
+      `VALUES (${printer.id}, '${printer.building}', '${printer.date_updated}', '${printer.department}', '${printer.mac_address}', '${printer.model}', '${printer.name}', '${printer.room}', '${printer.serial}')`;
+
+    let query = db.query(sql, printer, (err, result) => {
+      if (err) throw err;
+      console.log(result);
+      res.send(result);
+    });
   });
-});
 
 app
   .route("/printers/:id")
@@ -66,20 +83,7 @@ app
     res.json(req.body);
     console.log(sql);
   })
-  // Insert a Printer
-  .post((req, res) => {
-    let id = req.params.id;
-    let printer = {
-      id,
-      // TO-DO
-    };
-    let sql = "INSERT INTO printers SET ?"; // INSERT INTO `printers` (`id`, `building`, `date_updated`, `department`, `mac_address`, `model`, `name`, `room`, `serial`) VALUES ('100', 'unknown', '2022-04-20', '', '60:12:8B:D5:0E:5B', '4235', 'B-HS-604-1', 'unknown', 'RKJ18475');
-    let query = db.query(sql, printer, (err, result) => {
-      if (err) throw err;
-      console.log(result);
-      res.send(result);
-    });
-  }) // Delete a Printer
+  // Delete a Printer
   .delete((req, res) => {
     let id = req.params.id;
     let sql = `DELETE FROM printers WHERE id = ${id}`;
