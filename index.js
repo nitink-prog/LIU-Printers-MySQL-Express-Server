@@ -30,9 +30,9 @@ app.get("/", (req, res) => {
   );
 });
 
-// Get Full Printers DB - Pagination?
 app
   .route("/printers")
+  // Get Full Printers DB - Pagination?
   .get((req, res) => {
     let sql = "SELECT * FROM printers";
     let query = db.query(sql, (err, results) => {
@@ -45,10 +45,6 @@ app
   .post((req, res) => {
     let printer = req.body;
     let sql = "INSERT INTO printers SET ?";
-    // the above line is equivalent to:
-    // "INSERT INTO printers (id, building, date_updated, department, mac_address, model, name, room, serial) " +
-    // `VALUES (${printer.id}, '${printer.building}', '${printer.date_updated}', '${printer.department}', '${printer.mac_address}', '${printer.model}', '${printer.name}', '${printer.room}', '${printer.serial}')`;
-
     let query = db.query(sql, printer, (err, result) => {
       if (err) throw err;
       console.log(result);
