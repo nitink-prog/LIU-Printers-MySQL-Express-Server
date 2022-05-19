@@ -84,7 +84,11 @@ app
   .delete((req, res) => {
     let id = req.params.id;
     let sql = `DELETE FROM printers WHERE id = ${id}`;
-    // DISABLED FOR NOW...
+    let query = db.query(sql, (err, result) => {
+      if (err) throw err;
+      console.log(result);
+      res.send(result);
+    });
   });
 
 // Listener
